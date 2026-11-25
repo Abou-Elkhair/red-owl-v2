@@ -30,11 +30,11 @@ export const Navbar: React.FC = () => {
           type="button"
           onClick={() => handleNav('home')}
           className="flex shrink-0 items-center whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D11A22]"
-          aria-label="Red Owl Construction Home"
+          aria-label={lang === 'ar' ? t.brandName + ' — ' + t.nav.home : 'Red Owl Construction Home'}
         >
           <img
             src="./assets/redowl/obj_7.jpg"
-            alt="Red Owl Construction"
+            alt={lang === 'ar' ? t.brandName : 'Red Owl Construction'}
             referrerPolicy="no-referrer"
             className="h-9 w-auto object-contain sm:h-10"
           />

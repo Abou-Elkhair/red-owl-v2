@@ -18,9 +18,9 @@ const facts: Fact[] = [
  [/quality|inspect|handover|جوده|تفتيش|استلام|تسليم/,7,'تبدأ الجودة بتوثيق الإجراءات وقوائم الفحص، ثم اعتماد المواد والمعدات قبل وصولها، والتفتيش أثناء التركيب، وأخيرًا الاختبار والتشغيل قبل التسليم.','Each trade follows documented procedures and checklists. Materials are approved before arrival, installations inspected on site, and systems tested and commissioned before handover.'],
  [/تواصل|تليفون|تلفون|رقم الشرك|عنوان|ايميل|البريد|مقر|مكتبكم|اتصل|اكلم|مناقص|عرض سعر|contact|phone|email|address|office|tender|quotation/,69,'للتواصل أو إرسال مناقصة: info@redowlco.com أو 01000695256. المكتب في فيلا ٣٢٨، شارع التسعين، جنوب الأكاديمية ج، التجمع الخامس.','For inquiries and tenders, email info@redowlco.com or call +20 100 069 5256. The office is at Villa 328, 90th Street, South Academy C, Fifth Settlement.'],
  [/chairman|يوسف|رئيس|يدير/,4,'يوسف جودة هو رئيس مجلس الإدارة. ','Youssef Gouda is the chairman. '],
- [/vision|mission|values|رؤي|رسال|قيم/,5,'تسعى ريد أول لأن تكون شريكًا موثوقًا للأنظمة الميكانيكية والكهربائية، مع تنفيذ آمن في الموعد وضمن الميزانية. قيمها الجودة والالتزام والسلامة والابتكار والنزاهة.','Red Owl aims to be a trusted mechanical and electrical partner and deliver safely, on time and within budget. Its values are quality, commitment, safety, innovation and integrity.'],
+ [/vision|mission|values|رؤي|رسال|قيم/,5,'تسعى red-owl لأن تكون شريكًا موثوقًا للأنظمة الميكانيكية والكهربائية، مع تنفيذ آمن في الموعد وضمن الميزانية. قيمها الجودة والالتزام والسلامة والابتكار والنزاهة.','Red Owl aims to be a trusted mechanical and electrical partner and deliver safely, on time and within budget. Its values are quality, commitment, safety, innovation and integrity.'],
  [/ongoing|in progress|status|progress|شغالين دلوقتي|قيد التنفيذ|جاري|نسبه الانجاز|حاله المشروع/,11,'للحصول على آخر تحديث لحالة المشروع أو نسبة الإنجاز، تواصل مع فريقنا على info@redowlco.com.','For the latest project status or completion percentage, contact our team at info@redowlco.com.'],
- [/saudi|ksa|السعودي/,47,'في السعودية شاركت ريد أول في نيوم كمقاول باطن لتوريد وتركيب وتشغيل مضخة حريق بسعة ١٬٠٠٠ جالون في الدقيقة. المقاول الرئيسي العيوني والاستشاري بكتل.','In Saudi Arabia, Red Owl subcontracted at NEOM to supply, install and commission a 1,000 GPM fire pump. Al-Ayuni was the main contractor and Bechtel the consultant.'],
+ [/saudi|ksa|السعودي/,47,'في السعودية شاركت red-owl في نيوم كمقاول باطن لتوريد وتركيب وتشغيل مضخة حريق بسعة ١٬٠٠٠ جالون في الدقيقة. المقاول الرئيسي العيوني والاستشاري بكتل.','In Saudi Arabia, Red Owl subcontracted at NEOM to supply, install and commission a 1,000 GPM fire pump. Al-Ayuni was the main contractor and Bechtel the consultant.'],
  [/where.*work|coverage|countries|دول|مناطق|محافظات|بتشتغلوا فين/,12,'تشمل الأعمال مصر والسعودية. في مصر توجد مشروعات بالقاهرة الجديدة والعاصمة الإدارية والدلتا والساحل الشمالي والصعيد، وفي السعودية شاركنا في مشروع نيوم.','Work spans Egypt and Saudi Arabia, including New Cairo, the New Administrative Capital, the Delta, North Coast, Upper Egypt and NEOM.'],
  [/fire|حريق|الحريق|حرايق|اطفا|رشاش/,9,'يشمل التخصص أنظمة مكافحة الحريق والمضخات. من أمثلة التنفيذ نظام ميدور مول ومضخة نيوم بسعة ١٬٠٠٠ جالون في الدقيقة.','Fire protection work includes firefighting systems and pumps. Examples include Middor Mall and the 1,000 GPM NEOM pump.'],
  [/hvac|chilled|duct|ventilation|mechanical|plumbing|تكييف|ميكانيك|سباك|صرف|تهوي|دكت/,9,'تشمل الأعمال الميكانيكية التكييف والمياه المبرّدة، ومجاري الهواء والتهوية، والسباكة والصرف، ومكافحة الحريق والمضخات وسحب الدخان. يظهر تطبيق شبكات المياه المبرّدة والدكت في جامعة عين شمس الأهلية.','Mechanical scope covers HVAC, chilled water, ducts, ventilation, plumbing, drainage, firefighting, pumps and smoke extraction. Ain Shams National University is a chilled-water and ductwork example.'],
@@ -29,7 +29,7 @@ const facts: Fact[] = [
  [/team|staff|employees|technicians|engineers|فريق|مهندس|فنيين|موظف|عدد العاملين/,3,'فريقنا مكوّن من ٢٠ مهندس وفني.','Our team has 20 engineers and technicians.'],
  [/كم مشروع|كام مشروع|how many projects|number of projects|عدد (ال)?(مش|مشار)/,3,'عندنا أكتر من ٢٠ مشروع.','Our portfolio includes more than 20 projects.'],
  [/founded|established|since when|when.*start|تاس|اتاس|تاسيس|بدات|بداتوا|بدايت|من امتي|سنه كام/,3,'بدأنا سنة ٢٠٢٠.','We started in 2020.'],
- [/about|experience|who are you|خبر|عرفني|عن الشرك|مين انت|نبذه/,3,'إحنا ريد أول للإنشاءات. بدأنا سنة ٢٠٢٠ وبننفّذ الأعمال الميكانيكية والكهربائية والصحية في مصر والسعودية.','We’re Red Owl Construction. Since 2020, we’ve delivered mechanical, electrical and plumbing work in Egypt and Saudi Arabia.'],
+ [/about|experience|who are you|خبر|عرفني|عن الشرك|مين انت|نبذه/,3,'إحنا red-owl للإنشاءات. بدأنا سنة ٢٠٢٠ وبننفّذ الأعمال الميكانيكية والكهربائية والصحية في مصر والسعودية.','We’re Red Owl Construction. Since 2020, we’ve delivered mechanical, electrical and plumbing work in Egypt and Saudi Arabia.'],
 ];
 export function answer(question: string, lang: Language, previous?: string): Reply {
   const q=normalize(question);
@@ -44,7 +44,7 @@ export function answer(question: string, lang: Language, previous?: string): Rep
     if (ownership || founder) {
       const chairman = TRANSLATIONS[lang].about.chairmanName;
       const missing = founder ? tr('اسم المؤسس','the founder') : tr('اسم المالك','the owner');
-      return {text:tr('رئيس مجلس إدارة ريد أول هو '+chairman+'. '+missing+' مش مذكور في بيانات الشركة المتاحة.',
+      return {text:tr('رئيس مجلس إدارة red-owl هو '+chairman+'. '+missing+' مش مذكور في بيانات الشركة المتاحة.',
         chairman+' is Red Owl’s chairman. Our company information does not identify '+missing+'.'),page:4};
     }
   }
@@ -82,7 +82,7 @@ export function answer(question: string, lang: Language, previous?: string): Rep
     ['consultant',/consultant|استشاري/,'الاستشاري','Consultant'],
     ['owner',/owner|المالك/,'المالك','Owner'],
     ['client',/client|العميل/,'العميل','Client'],
-    ['role',/role|دور|مقاول باطن/,'دور ريد أول','Red Owl’s role'],
+    ['role',/role|دور|مقاول باطن/,'دور red-owl','Red Owl’s role'],
   ] as const;
   const requested=partyFields.filter(([,pattern])=>pattern.test(q));
   const place=/location|where|مكان|موقع|فين|عنوان/.test(q);
@@ -107,7 +107,7 @@ export function answer(question: string, lang: Language, previous?: string): Rep
   if(other)return {text:tr('من أعمالنا: ','Our work includes ')+other.name[lang]+'. '+tr('ما عنديش تفاصيل مؤكدة عن نطاق شغلنا فيه.','I don’t have confirmed scope details for this project.'),page:68};
   for(const [pattern,page,ar,en] of facts) if(pattern.test(q)) return {text:tr(ar,en),page,project:page===47?'neom-project':undefined};
   if(/projects?|مشروعات|مشاريع|اعمالكم|اعمالك|سابقة اعمال/.test(q))return {text:tr('من مشروعاتنا: ','Our projects include ')+PROJECTS.slice(0,11).map(p=>p.name[lang]).join(tr('، ',', '))+'.',page:13};
-  if(/^(اهلا|مرحبا|هاي|hello|hi|السلام عليكم)[ !.؟?]*$/.test(q))return {text:tr('أهلًا بك! اسألني عن مشروع أو خدمة أو طريقة التواصل مع ريد أول.','Welcome! Ask about a Red Owl project, service or how to contact the team.')};
+  if(/^(اهلا|مرحبا|هاي|hello|hi|السلام عليكم)[ !.؟?]*$/.test(q))return {text:tr('أهلًا بك! اسألني عن مشروع أو خدمة أو طريقة التواصل مع red-owl.','Welcome! Ask about a Red Owl project, service or how to contact the team.')};
   return {text:searchSite(q,lang) ?? fallback};
 }
 

@@ -43,7 +43,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: 'electrical',
     projectTitle: { ar: 'مصنع اليوم للصناعات الغذائية', en: 'Alyoum Food Factory' },
     caption: {
-      ar: 'فريق Red Owl أثناء تركيب مسارات التغذية الكهربائية واللوحات',
+      ar: 'فريق red-owl أثناء تركيب مسارات التغذية الكهربائية واللوحات',
       en: 'Red Owl Technician Installing Industrial Busbar & Cable Tray System',
     },
     location: { ar: 'العاشر من رمضان، الشرقية', en: '10th of Ramadan City' },

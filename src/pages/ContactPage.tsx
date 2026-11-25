@@ -202,7 +202,7 @@ export const ContactPage: React.FC = () => {
                 <div className="inline-block rounded-md bg-white p-3.5">
                   <img
                     src="./assets/redowl/obj_1723.jpg"
-                    alt="Red Owl Construction"
+                    alt={lang === 'ar' ? t.brandName : 'Red Owl Construction'}
                     referrerPolicy="no-referrer"
                     className="h-10 w-auto object-contain"
                   />

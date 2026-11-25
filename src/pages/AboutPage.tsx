@@ -27,7 +27,7 @@ export const AboutPage: React.FC = () => {
             <div className="overflow-hidden rounded-xl border border-[#E2E4E9] bg-[#191B1F] lg:col-span-5">
               <img
                 src="./assets/redowl/obj_95.jpg"
-                alt="Red Owl Construction Fire Pump Room"
+                alt={lang === 'ar' ? 'غرفة مضخات حريق red-owl' : 'Red Owl Construction Fire Pump Room'}
                 referrerPolicy="no-referrer"
                 className="h-full max-h-[460px] w-full object-cover"
               />

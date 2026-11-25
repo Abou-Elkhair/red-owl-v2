@@ -7,7 +7,7 @@ import './assistant.css';
 
 interface Turn { question: string; reply: Reply; language: Language; suggestions: string[] }
 const copy = {
-  ar: {title:'مساعد ريد أول',intro:'عن أي مشروع أو خدمة تحب تعرف أكتر؟',dismiss:'إخفاء الأسئلة المقترحة',suggestions:'أسئلة مقترحة',close:'إغلاق المحادثة',send:'إرسال السؤال',input:'اكتب سؤالك…',prompts:['إيه دوركم في نيوم؟','إيه خدماتكم؟','إزاي أتواصل معاكم؟']},
+  ar: {title:'مساعد red-owl',intro:'عن أي مشروع أو خدمة تحب تعرف أكتر؟',dismiss:'إخفاء الأسئلة المقترحة',suggestions:'أسئلة مقترحة',close:'إغلاق المحادثة',send:'إرسال السؤال',input:'اكتب سؤالك…',prompts:['إيه دوركم في نيوم؟','إيه خدماتكم؟','إزاي أتواصل معاكم؟']},
   en: {title:'Red Owl assistant',intro:'Which project or service would you like to explore?',dismiss:'Hide suggested questions',suggestions:'Suggested questions',close:'Close conversation',send:'Send question',input:'Ask a question…',prompts:['What was your role at NEOM?','What services do you offer?','How can I contact the team?']}
 };
 export function ProfileAssistant(){
