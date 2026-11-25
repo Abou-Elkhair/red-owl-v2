@@ -1,0 +1,48 @@
+.owl-assistant{position:fixed;inset-inline-end:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:42;color:var(--ink-primary);font-size:14px}
+.owl-launcher,.owl-compose button{display:flex;align-items:center;justify-content:center;background:var(--accent-red);color:white;border-radius:24px}
+.owl-launcher{gap:9px;font-weight:700;padding:12px 18px;box-shadow:0 5px 20px #191b1f26}
+.owl-launcher:hover,.owl-compose button:not(:disabled):hover{background:var(--accent-red-hover)}
+.owl-panel{width:min(374px,calc(100vw - 32px));height:min(475px,calc(100dvh - 92px));display:flex;flex-direction:column;border:1px solid var(--border-hairline);border-radius:18px;overflow:hidden;background:var(--bg-canvas);box-shadow:0 14px 50px #191b1f26}
+.owl-header{background-color:var(--bg-charcoal);color:white;padding:15px;display:flex;align-items:center;gap:12px;border-block-start:3px solid var(--accent-red)}
+.owl-header h2{font-weight:800;font-size:16px}.owl-header button{margin-inline-start:auto;width:40px;height:40px;display:grid;place-items:center;border-radius:50%}.owl-header button:hover{background:var(--bg-graphite)}
+.owl-thread{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:16px;line-height:1.65}.owl-greeting{font-weight:700;margin-bottom:14px}.owl-suggestions{display:grid;justify-items:start;gap:7px}.owl-suggestions button{border:1px solid var(--border-hairline);padding:8px 13px;border-radius:14px;text-align:start}.owl-suggestions button:hover{border-color:var(--accent-red);color:var(--accent-red-hover)}
+.owl-question,.owl-answer{padding:10px 13px;border-radius:12px;max-width:94%;white-space:pre-line;overflow-wrap:anywhere}.owl-question{background:var(--bg-graphite);color:white;width:fit-content;margin:16px 0 8px;margin-inline-start:auto}.owl-answer{background:var(--bg-surface);text-align:start}
+.owl-compose{border-top:1px solid var(--border-hairline);padding:10px;display:flex;gap:6px}.owl-compose input{flex:1;min-width:0;padding:8px}.owl-compose button{width:42px;height:42px}.owl-compose button:disabled{background:var(--ink-muted);opacity:.65}.owl-assistant :focus-visible{outline:2px solid var(--accent-red);outline-offset:-2px}
+.owl-floating-prompts{display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-bottom:9px;max-width:calc(100vw - 32px);pointer-events:none}
+.owl-floating-prompts button{pointer-events:auto;background:var(--bg-canvas);border:1px solid var(--border-hairline);box-shadow:0 3px 14px #191b1f1a}
+.owl-dismiss{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:var(--ink-secondary)}
+.owl-prompt{border-radius:18px;padding:8px 14px;font-weight:600;text-align:start}
+.owl-floating-prompts button:hover{border-color:var(--accent-red);color:var(--accent-red-hover)}
+.owl-assistant:has(.owl-floating-prompts){pointer-events:none}
+.owl-launcher{margin-inline-start:auto;pointer-events:auto}
+.owl-next{display:flex;flex-wrap:wrap;gap:6px;margin-block:12px 8px}
+.owl-next button{background:var(--bg-canvas);border:1px solid var(--border-hairline);border-radius:14px;padding:6px 10px;text-align:start;font-size:13px}
+.owl-next button:hover{border-color:var(--accent-red);color:var(--accent-red-hover)}
+.owl-quote{background:var(--accent-red);color:white;border-radius:8px;padding:7px 12px;font-weight:700}
+.owl-quote:hover{background:var(--accent-red-hover)}
+
+.owl-thinking {
+  display: flex;
+  gap: .25rem;
+  width: fit-content;
+  margin: 0;
+  padding: .5rem .8rem;
+  border-radius: .75rem;
+  background: #f4f4f5;
+  color: #48484d;
+  font-size: .85rem;
+}
+.owl-thinking span {
+  display: inline-block;
+  width: .45rem;
+  height: .45rem;
+  border-radius: 50%;
+  background: #d11a22;
+  animation: owl-thinking-pulse .8s ease-in-out infinite alternate;
+}
+.owl-thinking span:nth-child(2) { animation-delay: .16s; }
+.owl-thinking span:nth-child(3) { animation-delay: .32s; }
+@keyframes owl-thinking-pulse { to { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) {
+  .owl-thinking span { animation: none; }
+}

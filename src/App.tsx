@@ -2,6 +2,7 @@ import React from 'react';
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Navbar } from './components/Navbar';
+import { ProfileAssistant } from './assistant/ProfileAssistant';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
 import { MediaLightbox } from './components/MediaLightbox';
@@ -53,6 +54,7 @@ const PageRouter: React.FC = () => {
         </AnimatePresence>
       </main>
       <Footer />
+      <ProfileAssistant />
       <ProjectModal />
       <MediaLightbox />
     </div>
