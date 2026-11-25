@@ -9,6 +9,7 @@ export const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks: { id: PageId; label: string }[] = [
+    { id: 'home', label: t.nav.home },
     { id: 'about', label: t.nav.about },
     { id: 'services', label: t.nav.services },
     { id: 'projects', label: t.nav.projects },
@@ -39,8 +40,8 @@ export const Navbar: React.FC = () => {
           />
         </button>
 
-        {/* Zone 2: 5 concise single-line text links */}
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary Navigation">
+        {/* Zone 2: Concise single-line navigation links */}
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Primary Navigation">
           {navLinks.map((item) => {
             const active = currentPage === item.id;
             return (
@@ -110,7 +111,6 @@ export const Navbar: React.FC = () => {
             <div className="flex flex-col gap-1">
               {(
                 [
-                  { id: 'home', label: t.nav.home },
                   ...navLinks,
                   { id: 'contact', label: t.nav.contact },
                 ] as { id: PageId; label: string }[]
