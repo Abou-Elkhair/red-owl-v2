@@ -1,8 +1,10 @@
+import { visitorAnswer } from './visitorQuestions';
+import { contactAnswer, normalize, searchSite } from './siteSearch';
+import { TRANSLATIONS } from '../data/translations';
 import { OTHER_PROJECTS, PROJECTS } from '../data/projects';
 import type { Language } from '../types';
 
 export interface Reply { text: string; page?: number; project?: string }
-const normalize = (s: string) => s.toLowerCase().normalize('NFKC').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/[\u064b-\u065fـ]/g,'').replace(/[-–—]/g,' ').replace(/\s+/g,' ').trim();
 const references = [
   [15,'middor|ميدور'],[21,'ain shams|عين شمس'],[25,'royal walk|c07|رويال ووك|رويال ووك'],
   [31,'economic court|المحكمة الاقتصادية'],[36,'alyoum|اليوم'],[43,'mercury complex|mercury|ميركوري'],
@@ -34,6 +36,47 @@ export function answer(question: string, lang: Language, previous?: string): Rep
   const tr=(ar:string,en:string)=>lang==='ar'?ar:en;
   const fallback=tr('ما عنديش معلومة مؤكدة عن النقطة دي. تقدر تسأل فريقنا على info@redowlco.com.','I don’t have a confirmed answer to that. You can reach our team at info@redowlco.com.');
   const matches=index.filter(r=>r.aliases.some(a=>q.includes(a)));
+  const company = /الشركه|شركتكم|ريد اول|red owl|company|business/.test(q);
+  const projectQuestion = matches.length > 0 || /المشروع|project/.test(q);
+  if (!projectQuestion && (company || !previous)) {
+    const ownership = /صاحب|اصحاب|مالك|يملك|ملكيه|\b(owns|owner|ownership)\b/.test(q);
+    const founder = /مؤسس|مين (?:اللي )?(?:اسس|بدا) |who (?:founded|started)|\bfounder\b/.test(q);
+    if (ownership || founder) {
+      const chairman = TRANSLATIONS[lang].about.chairmanName;
+      const missing = founder ? tr('اسم المؤسس','the founder') : tr('اسم المالك','the owner');
+      return {text:tr('رئيس مجلس إدارة ريد أول هو '+chairman+'. '+missing+' مش مذكور في بيانات الشركة المتاحة.',
+        chairman+' is Red Owl’s chairman. Our company information does not identify '+missing+'.'),page:4};
+    }
+  }
+  if (!projectQuestion && /بتشتغلو[ا]? فين|شغالين فين|where do you work/.test(q)) {
+    const coverage = facts.find(([pattern])=>pattern.test('coverage'))!;
+    return {text:tr(coverage[2],coverage[3]),page:coverage[1]};
+  }
+  const generalServices = /(?:بتشتغلوا?|بتشتغلو|شغالين|متخصصين|تخصصكم|مجالكم|شغلكم|نشاطكم)\s+(?:ف(?:ي)?\s+)?ايه|ايه\s+(?:مجال|شغل|نشاط|تخصص)|(?:بتعملوا?|بتقدمو?ا?)\s+ايه|what (?:do you do|does (?:red owl|your company) do)|what kind of work/.test(q);
+  if (!projectQuestion && generalServices) {
+    const service = facts.find(([pattern])=>pattern.test('services'))!;
+    return {text:tr(service[2],service[3]),page:service[1]};
+  }
+  const directory = contactAnswer(q,lang,matches.length > 0);
+  if(directory) return {text:directory};
+  const visitor = !matches.length && visitorAnswer(q,lang);
+  if(visitor) return {text:visitor,page:8};
+  const status = /ongoing|in progress|قيد التنفيذ|تحت التنفيذ|جاريه|شغالين دلوقتي/.test(q) ? 'in-progress'
+    : /completed|مكتمله|خلصتوها/.test(q) ? 'completed' : undefined;
+  const statusLabel = (value: string) => value === 'completed' ? TRANSLATIONS[lang].projectsPage.completed : TRANSLATIONS[lang].projectsPage.inProgress;
+  if(matches.length && (status || /status|حاله/.test(q))) {
+    return {text:matches.map(({project})=>project.name[lang]+' — '+statusLabel(project.status)).join('\n'),project:matches[0].project.id};
+  }
+  if(status && !matches.length) {
+    const names=[...PROJECTS,...OTHER_PROJECTS].filter(p=>p.status===status).map(p=>p.name[lang]);
+    return {text:statusLabel(status)+'\n'+(names.join('\n') || tr('لا توجد مشروعات معروضة بهذه الحالة.','No projects are listed with this status.'))};
+  }
+  const media = /صور|جالري|معرض|فيديو|ريلز|gallery|photos?|pictures?|videos?|reels?/.test(q);
+  const siteTopic = media || /رؤي|رسال[ته]|قيمكم|mission|vision|values|lifecycle|مراحل التنفيذ/.test(q) || /iso|ايزو|شهادات|certifications?|certificates?|عرض سعر|quotation|request a quote|rfp/.test(q);
+  if(siteTopic && !/تاريخ|صلاحية|صلاحيه|expiry|expir|تكلف|cost/.test(q)) {
+    const result=searchSite(q,lang);
+    if(result)return {text:result};
+  }
   const partyFields = [
     ['mainContractor',/main contractor|المقاول الرئيسي/,'المقاول الرئيسي','Main contractor'],
     ['consultant',/consultant|استشاري/,'الاستشاري','Consultant'],
@@ -65,7 +108,7 @@ export function answer(question: string, lang: Language, previous?: string): Rep
   for(const [pattern,page,ar,en] of facts) if(pattern.test(q)) return {text:tr(ar,en),page,project:page===47?'neom-project':undefined};
   if(/projects?|مشروعات|مشاريع|اعمالكم|اعمالك|سابقة اعمال/.test(q))return {text:tr('من مشروعاتنا: ','Our projects include ')+PROJECTS.slice(0,11).map(p=>p.name[lang]).join(tr('، ',', '))+'.',page:13};
   if(/^(اهلا|مرحبا|هاي|hello|hi|السلام عليكم)[ !.؟?]*$/.test(q))return {text:tr('أهلًا بك! اسألني عن مشروع أو خدمة أو طريقة التواصل مع ريد أول.','Welcome! Ask about a Red Owl project, service or how to contact the team.')};
-  return {text:fallback};
+  return {text:searchSite(q,lang) ?? fallback};
 }
 
 const discoveryQuestions = {

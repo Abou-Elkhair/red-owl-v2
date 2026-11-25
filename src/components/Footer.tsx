@@ -1,3 +1,4 @@
+import { CONTACT } from '../data/contact';
 import React from 'react';
 import { Globe, Mail, MapPin, Phone, Globe2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -70,19 +71,19 @@ export const Footer: React.FC = () => {
             <ul className="mt-4 space-y-3 text-sm text-[#B8BDC7]">
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#D11A22]" />
-                <a href="tel:01000695256" className="tabular-nums hover:text-white" dir="ltr">
-                  01000695256
+                <a href={`tel:${CONTACT.phone}`} className="tabular-nums hover:text-white" dir="ltr">
+                  {CONTACT.phone}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#D11A22]" />
-                <a href="mailto:info@redowlco.com" className="hover:text-white" dir="ltr">
-                  info@redowlco.com
+                <a href={`mailto:${CONTACT.email}`} className="hover:text-white" dir="ltr">
+                  {CONTACT.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Globe2 className="mt-0.5 h-4 w-4 shrink-0 text-[#D11A22]" />
-                <span dir="ltr">www.redowlco.com</span>
+                <span dir="ltr">{CONTACT.website}</span>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#D11A22]" />

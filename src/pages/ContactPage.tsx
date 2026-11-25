@@ -1,3 +1,4 @@
+import { CONTACT } from '../data/contact';
 import React, { useEffect, useState } from 'react';
 import { Check, CheckCircle2, Copy, Globe2, Mail, MapPin, Phone } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -83,7 +84,7 @@ export const ContactPage: React.FC = () => {
     const body = encodeURIComponent(
       `Name: ${form.fullName}\nCompany: ${form.company}\nPhone: ${form.phone}\nEmail: ${form.email}\nCountry: ${form.country}\nSector: ${form.projectType}\nDisciplines: ${form.disciplines.join(', ')}\n\nScope:\n${form.message}`
     );
-    return `mailto:info@redowlco.com?subject=${subject}&body=${body}`;
+    return `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
   };
 
   const disciplineList: { key: DisciplineKey; label: string }[] = [
@@ -128,21 +129,21 @@ export const ContactPage: React.FC = () => {
                       key: 'phone',
                       icon: Phone,
                       label: t.contactPage.phoneLabel,
-                      val: '01000695256',
+                      val: CONTACT.phone,
                       ltr: true,
                     },
                     {
                       key: 'email',
                       icon: Mail,
                       label: t.contactPage.emailLabel,
-                      val: 'info@redowlco.com',
+                      val: CONTACT.email,
                       ltr: true,
                     },
                     {
                       key: 'web',
                       icon: Globe2,
                       label: t.contactPage.websiteLabel,
-                      val: 'www.redowlco.com',
+                      val: CONTACT.website,
                       ltr: true,
                     },
                     {
