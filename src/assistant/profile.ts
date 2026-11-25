@@ -34,7 +34,7 @@ const facts: Fact[] = [
 export function answer(question: string, lang: Language, previous?: string): Reply {
   const q=normalize(question);
   const tr=(ar:string,en:string)=>lang==='ar'?ar:en;
-  const fallback=tr('ما عنديش معلومة مؤكدة عن النقطة دي. تقدر تسأل فريقنا على info@redowlco.com.','I don’t have a confirmed answer to that. You can reach our team at info@redowlco.com.');
+  const fallback=tr('أنا مساعد آلي لسه تحت التدريب والتجربة، ومقدرش أجاوب على السؤال ده حاليًا. تقدر تسأل فريقنا على info@redowlco.com، أو تختار سؤال من الاقتراحات دي.','I’m an automated assistant still in training and testing, so I can’t answer that question yet. You can email our team at info@redowlco.com or choose one of the suggested questions below.');
   const matches=index.filter(r=>r.aliases.some(a=>q.includes(a)));
   const company = /الشركه|شركتكم|ريد اول|red owl|company|business/.test(q);
   const projectQuestion = matches.length > 0 || /المشروع|project/.test(q);
