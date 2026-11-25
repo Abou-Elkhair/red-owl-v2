@@ -22,6 +22,13 @@ import {
   StaggerItem,
 } from '../components/MotionPrimitives';
 import { PARTNER_LOGOS } from '../components/PartnerLogos';
+import {
+  CraneInfrastructureIcon,
+  FoundedAwardIcon,
+  ProjectsSkylineIcon,
+  RegionalPresenceIcon,
+  TeamHelmetIcon,
+} from '../components/KpiIcons';
 
 const HERO_SLIDES = [
   {
@@ -221,25 +228,54 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 2. Full-Width Quantitative Proof KPI Strip */}
-      <section className="border-b border-[#E2E4E9] bg-white">
-        <div className="mx-auto grid max-w-[1440px] grid-cols-2 divide-y divide-[#E2E4E9] px-5 sm:grid-cols-3 sm:divide-y-0 sm:px-8 lg:grid-cols-5 lg:divide-x lg:px-12">
+      <section className="border-b border-[#DFE2E7] bg-[#EBECEE] py-12 lg:py-14">
+        <StaggerGroup className="mx-auto grid max-w-[1280px] grid-cols-2 gap-x-6 gap-y-10 px-5 sm:grid-cols-3 sm:px-8 lg:grid-cols-5 lg:px-12">
           {[
-            { val: t.kpis.foundedValue, label: t.kpis.foundedLabel },
-            { val: t.kpis.teamValue, label: t.kpis.teamLabel },
-            { val: t.kpis.projectsValue, label: t.kpis.projectsLabel },
-            { val: t.kpis.stationsValue, label: t.kpis.stationsLabel },
-            { val: t.kpis.countriesValue, label: t.kpis.countriesLabel },
-          ].map((kpi, idx) => (
-            <div key={idx} className="px-4 py-7 first:ps-0 lg:px-6">
-              <div className="font-display text-3xl font-bold text-[#D11A22] sm:text-4xl">
-                <CountUp value={kpi.val} />
-              </div>
-              <p className="mt-1.5 text-xs font-semibold text-[#4B505B] sm:text-sm">
-                {kpi.label}
-              </p>
-            </div>
-          ))}
-        </div>
+            {
+              val: t.kpis.foundedValue,
+              label: t.kpis.foundedLabel,
+              Icon: FoundedAwardIcon,
+            },
+            {
+              val: t.kpis.teamValue,
+              label: t.kpis.teamLabel,
+              Icon: TeamHelmetIcon,
+            },
+            {
+              val: t.kpis.projectsValue,
+              label: t.kpis.projectsLabel,
+              Icon: ProjectsSkylineIcon,
+            },
+            {
+              val: t.kpis.stationsValue,
+              label: t.kpis.stationsLabel,
+              Icon: CraneInfrastructureIcon,
+            },
+            {
+              val: t.kpis.countriesValue,
+              label: t.kpis.countriesLabel,
+              Icon: RegionalPresenceIcon,
+            },
+          ].map((kpi, idx) => {
+            const IconComp = kpi.Icon;
+            return (
+              <StaggerItem
+                key={idx}
+                className="group flex flex-col items-center text-center last:col-span-2 sm:last:col-span-1"
+              >
+                <div className="mb-3.5 text-[#7B808A] transition-all duration-200 group-hover:-translate-y-1 group-hover:text-[#D11A22]">
+                  <IconComp className="h-12 w-12" />
+                </div>
+                <div className="font-display text-3xl font-semibold tracking-tight text-[#4D525C] transition-colors duration-200 group-hover:text-[#D11A22] sm:text-4xl">
+                  <CountUp value={kpi.val} />
+                </div>
+                <p className="mt-2 max-w-[190px] text-xs font-medium leading-relaxed text-[#555A64] sm:text-sm">
+                  {kpi.label}
+                </p>
+              </StaggerItem>
+            );
+          })}
+        </StaggerGroup>
       </section>
 
       {/* 3. Core Capabilities Asymmetric Bento Grid */}
@@ -555,8 +591,8 @@ export const HomePage: React.FC = () => {
           </Reveal>
 
           <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12">
-            {/* Region Selector Buttons */}
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
+            {/* Region Selector Buttons (compact horizontal scroll on mobile/small, vertical list on lg+) */}
+            <div className="no-scrollbar flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 lg:col-span-5 lg:grid lg:grid-cols-1 lg:gap-2.5 lg:overflow-visible lg:pb-0">
               {t.about.regions.map((region, idx) => {
                 const active = activeRegionIdx === idx;
                 return (
@@ -564,17 +600,17 @@ export const HomePage: React.FC = () => {
                     key={region.name}
                     type="button"
                     onClick={() => setActiveRegionIdx(idx)}
-                    className={`flex items-center justify-between rounded-lg border px-4 py-3.5 text-start transition-colors duration-150 ${
+                    className={`flex min-h-[44px] shrink-0 snap-start items-center justify-between gap-2.5 whitespace-nowrap rounded-lg border px-3 py-2 text-start transition-colors duration-150 lg:w-full lg:px-4 lg:py-3.5 ${
                       active
                         ? 'border-[#D11A22] bg-[#D11A22] text-white'
                         : 'border-[#2E323B] bg-[#25282E]/90 text-[#C5C9D3] hover:border-[#4B505B] hover:text-white'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <MapPin className={`h-4 w-4 shrink-0 ${active ? 'text-white' : 'text-[#D11A22]'}`} />
-                      <span className="text-sm font-semibold">{region.name}</span>
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <MapPin className={`h-3.5 w-3.5 shrink-0 lg:h-4 lg:w-4 ${active ? 'text-white' : 'text-[#D11A22]'}`} />
+                      <span className="text-xs font-semibold lg:text-sm">{region.name}</span>
                     </div>
-                    <span className="tabular-nums text-xs opacity-75">0{idx + 1}</span>
+                    <span className="tabular-nums text-[11px] opacity-75 lg:text-xs">0{idx + 1}</span>
                   </button>
                 );
               })}

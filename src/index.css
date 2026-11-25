@@ -47,6 +47,15 @@ html[dir="rtl"] .font-display {
   text-wrap: balance;
 }
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Subtle architectural blueprint dot/line pattern */
 .bg-engineering-grid {
   background-image:
