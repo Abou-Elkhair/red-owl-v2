@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import { PROJECTS } from '../data/projects';
+import { specialties } from '../seo/specialties';
+import {SiteLink} from '../components/SiteLink';
+import React from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Flame, Network, Wrench, Zap } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useApp } from '../context/AppContext';
@@ -38,8 +41,10 @@ const TAB_CONFIG: Record<
 };
 
 export const ServicesPage: React.FC = () => {
-  const { t, isRtl, navigate } = useApp();
-  const [activeTab, setActiveTab] = useState<TabKey>('mechanical');
+  const { t, isRtl, navigate, detail, lang } = useApp();
+  const specialty = specialties.find(item => item.id === detail);
+  const activeTab = (specialty ? 'mechanical' : detail ?? 'mechanical') as TabKey;
+  const tab = t.services.tabs.find(item => item.id === detail);
 
   const ForwardArrow = isRtl ? ArrowLeft : ArrowRight;
 
@@ -59,6 +64,21 @@ export const ServicesPage: React.FC = () => {
   const content = getTabContent();
   const currentConfig = TAB_CONFIG[activeTab];
 
+  if (specialty) {
+    return <article className="mx-auto max-w-5xl px-5 py-12">
+      <SiteLink page="services" className="font-bold text-[#D11A22]">{t.nav.services}</SiteLink>
+      <h1 className="font-display mt-5 text-3xl font-bold">{specialty.title[lang]}</h1>
+      <p className="my-4">{specialty.shortDesc[lang]}</p>
+      <h2 className="mt-10 mb-4 text-xl font-bold">{t.nav.projects}</h2>
+      <ul className="grid gap-4 sm:grid-cols-2">{PROJECTS.filter(p=>p.disciplines[specialty.discipline]).map(p=>
+        <li key={p.id} className="rounded-lg border border-gray-200 p-4">
+          <SiteLink page="projects" detail={p.id} className="font-bold text-[#D11A22]">{p.name[lang]}</SiteLink>
+          <p>{p.location[lang]}</p>
+        </li>)}</ul>
+      <button className="mt-8 rounded-md bg-[#D11A22] px-5 py-3 text-white" onClick={()=>navigate('contact',{prefillDisciplines:[specialty.discipline]})}>{t.services.requestServiceCta}</button>
+    </article>;
+  }
+
   return (
     <div>
       {/* Header */}
@@ -66,10 +86,10 @@ export const ServicesPage: React.FC = () => {
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           <p className="text-xs font-bold tracking-wider text-[#D11A22]">{t.services.pageKicker}</p>
           <h1 className="font-display mt-2 max-w-3xl text-3xl font-bold text-[#191B1F] text-balance sm:text-4xl">
-            {t.services.pageTitle}
+            {tab?.title ?? t.services.pageTitle}
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#4B505B] sm:text-base">
-            {t.services.pageDesc}
+            {tab?.shortDesc ?? t.services.pageDesc}
           </p>
         </div>
       </section>
@@ -83,10 +103,8 @@ export const ServicesPage: React.FC = () => {
               const active = activeTab === tab.id;
               const Icon = TAB_CONFIG[tab.id].icon;
               return (
-                <button
+                <SiteLink page="services" detail={tab.id}
                   key={tab.id}
-                  type="button"
-                  onClick={() => setActiveTab(tab.id)}
                   className={`relative flex flex-col items-start rounded-xl border p-5 text-start transition-colors duration-150 ${
                     active
                       ? 'border-[#191B1F] bg-[#191B1F] text-white'
@@ -104,11 +122,14 @@ export const ServicesPage: React.FC = () => {
                   <p className={`mt-1 text-xs ${active ? 'text-[#C5C9D3]' : 'text-[#4B505B]'}`}>
                     {tab.shortDesc}
                   </p>
-                </button>
+                </SiteLink>
               );
             })}
           </div>
 
+          {activeTab==='mechanical' && <ul className="mt-5 flex flex-wrap gap-4">
+            {specialties.map(item=><li key={item.id}><SiteLink className="text-sm font-semibold text-[#D11A22] underline" page="services" detail={item.id}>{item.title[lang]}</SiteLink></li>)}
+          </ul>}
           {/* Active Discipline Showcase */}
           <AnimatePresence mode="wait">
             <motion.div

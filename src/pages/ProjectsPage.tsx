@@ -1,3 +1,4 @@
+import {SiteLink} from '../components/SiteLink';
 import React, { useMemo, useState } from 'react';
 import { Building2, MapPin, RotateCcw } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -195,7 +196,7 @@ export const ProjectsPage: React.FC = () => {
                       </div>
 
                       <h2 className="font-display mt-2 text-lg font-bold text-[#191B1F] transition-colors group-hover:text-[#D11A22]">
-                        {proj.name[lang]}
+                        <SiteLink page="projects" detail={proj.id} onClick={event=>event.stopPropagation()}>{proj.name[lang]}</SiteLink>
                       </h2>
 
                       <p className="mt-2 flex items-start gap-1.5 text-xs leading-relaxed text-[#4B505B]">

@@ -2,7 +2,12 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { TRANSLATIONS, Translations } from '../data/translations';
 import { DisciplineKey, Language, PageId, Project, ReelItem } from '../types';
 
+import { browserRoute, routePath, type Route, pages } from '../seo/routes';
+import { updateHead } from '../seo/metadata';
+
 interface AppContextValue {
+  detail?: string;
+  changeRoute: (route: Route) => void;
   lang: Language;
   setLang: (lang: Language) => void;
   toggleLang: () => void;
@@ -22,34 +27,9 @@ interface AppContextValue {
 
 const AppContext = createContext<AppContextValue | null>(null);
 
-const VALID_PAGES: PageId[] = [
-  'home',
-  'about',
-  'services',
-  'projects',
-  'gallery',
-  'quality',
-  'contact',
-];
-
-function getInitialPage(): PageId {
-  const hash = window.location.hash.replace('#', '') as PageId;
-  return VALID_PAGES.includes(hash) ? hash : 'home';
-}
-
-function getInitialLang(): Language {
-  try {
-    const saved = localStorage.getItem('redowl_lang');
-    if (saved === 'en' || saved === 'ar') return saved;
-  } catch {
-    // ignore storage errors
-  }
-  return 'ar';
-}
-
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLangState] = useState<Language>(getInitialLang);
-  const [currentPage, setCurrentPage] = useState<PageId>(getInitialPage);
+export const AppProvider: React.FC<{ children: React.ReactNode; initialRoute?: Route }> = ({ children, initialRoute }) => {
+  const [route,setRoute] = useState<Route>(() => initialRoute ?? browserRoute());
+  const {lang,page:currentPage,detail} = route;
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [activeReel, setActiveReel] = useState<ReelItem | null>(null);
@@ -68,31 +48,40 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [lang, isRtl]);
 
   useEffect(() => {
-    const onHashChange = () => {
-      const hash = window.location.hash.replace('#', '') as PageId;
-      if (VALID_PAGES.includes(hash)) {
-        setCurrentPage(hash);
+    function restore() {
+      const next = browserRoute();
+      if (pages.includes(location.hash.slice(1) as PageId)) {
+        history.replaceState(null,'',new URL(routePath(next) || '.',document.baseURI));
       }
+      setRoute(next);
+      setSelectedProject(null);
+      setLightboxIndex(null);
+      setActiveReel(null);
+    }
+    restore();
+    window.addEventListener('popstate',restore);
+    window.addEventListener('hashchange',restore);
+    return () => {
+      window.removeEventListener('popstate',restore);
+      window.removeEventListener('hashchange',restore);
     };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
+  useEffect(() => {updateHead(route);}, [route]);
 
-  const setLang = (next: Language) => {
-    setLangState(next);
+  const changeRoute = (next: Route) => {
+    const url = new URL(routePath(next) || '.', document.baseURI);
+    if (location.href !== url.href) history.pushState(null,'',url);
+    setRoute(next);
+    window.scrollTo({top:0,behavior:"instant"});
   };
-
-  const toggleLang = () => {
-    setLangState((prev) => (prev === 'ar' ? 'en' : 'ar'));
-  };
+  const setLang = (next: Language) => changeRoute({...route,lang:next});
+  const toggleLang = () => setLang(lang === 'ar' ? 'en' : 'ar');
 
   const navigate = (page: PageId, options?: { prefillDisciplines?: DisciplineKey[] }) => {
     if (options?.prefillDisciplines && options.prefillDisciplines.length > 0) {
       setPrefilledDisciplines(options.prefillDisciplines);
     }
-    setCurrentPage(page);
-    window.location.hash = page === 'home' ? '' : `#${page}`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    changeRoute({lang,page});
   };
 
   return (
@@ -103,7 +92,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         toggleLang,
         t: TRANSLATIONS[lang],
         isRtl,
-        currentPage,
+        currentPage, detail, changeRoute,
         navigate,
         selectedProject,
         setSelectedProject,

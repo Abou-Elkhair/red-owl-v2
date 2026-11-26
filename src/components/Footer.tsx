@@ -1,3 +1,4 @@
+import {SiteLink} from './SiteLink';
 import { CONTACT } from '../data/contact';
 import React from 'react';
 import { Globe, Mail, MapPin, Phone, Globe2 } from 'lucide-react';
@@ -5,7 +6,7 @@ import { useApp } from '../context/AppContext';
 import { PageId } from '../types';
 
 export const Footer: React.FC = () => {
-  const { t, lang, toggleLang, navigate } = useApp();
+  const { t, lang, currentPage, detail } = useApp();
 
   const links: { id: PageId; label: string }[] = [
     { id: 'home', label: t.nav.home },
@@ -51,13 +52,11 @@ export const Footer: React.FC = () => {
             <ul className="mt-4 space-y-2.5">
               {links.map((l) => (
                 <li key={l.id}>
-                  <button
-                    type="button"
-                    onClick={() => navigate(l.id)}
+                  <SiteLink page={l.id}
                     className="text-sm text-[#B8BDC7] transition-colors hover:text-white"
                   >
                     {l.label}
-                  </button>
+                  </SiteLink>
                 </li>
               ))}
             </ul>
@@ -97,14 +96,12 @@ export const Footer: React.FC = () => {
           <p className="text-xs text-[#8C93A0]">
             © <span className="tabular-nums">{new Date().getFullYear()}</span> {t.footer.rights}
           </p>
-          <button
-            type="button"
-            onClick={toggleLang}
+          <SiteLink page={currentPage} detail={detail} language={lang==='ar'?'en':'ar'}
             className="inline-flex items-center gap-2 rounded-md border border-[#2E323B] bg-[#25282E] px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:border-[#4B505B]"
           >
             <Globe className="h-3.5 w-3.5 text-[#D11A22]" />
             <span>{lang === 'ar' ? 'Switch to English (LTR)' : 'التبديل إلى العربية (RTL)'}</span>
-          </button>
+          </SiteLink>
         </div>
       </div>
     </footer>

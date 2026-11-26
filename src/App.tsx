@@ -1,3 +1,5 @@
+import type { Route } from './seo/routes';
+import { ProjectDetail } from './pages/ProjectDetail';
 import React from 'react';
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import { AppProvider, useApp } from './context/AppContext';
@@ -15,7 +17,7 @@ import { QualityIsoPage } from './pages/QualityIsoPage';
 import { ContactPage } from './pages/ContactPage';
 
 const PageRouter: React.FC = () => {
-  const { currentPage } = useApp();
+  const { currentPage, detail } = useApp();
 
   const renderPage = () => {
     switch (currentPage) {
@@ -24,7 +26,7 @@ const PageRouter: React.FC = () => {
       case 'services':
         return <ServicesPage />;
       case 'projects':
-        return <ProjectsPage />;
+        return detail ? <ProjectDetail id={detail}/> : <ProjectsPage />;
       case 'gallery':
         return <GalleryPage />;
       case 'quality':
@@ -41,7 +43,7 @@ const PageRouter: React.FC = () => {
     <div className="flex min-h-screen flex-col bg-white text-[#191B1F]">
       <Navbar />
       <main className="flex-1">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false} mode="wait">
           <motion.div
             key={currentPage}
             initial={{ opacity: 0, y: 8 }}
@@ -61,10 +63,10 @@ const PageRouter: React.FC = () => {
   );
 };
 
-export default function App() {
+export default function App({initialRoute}: {initialRoute?: Route} = {}) {
   return (
     <MotionConfig reducedMotion="user">
-      <AppProvider>
+      <AppProvider initialRoute={initialRoute}>
         <PageRouter />
       </AppProvider>
     </MotionConfig>
