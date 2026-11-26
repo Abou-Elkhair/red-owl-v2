@@ -1,0 +1,18 @@
+.project-photo-progress {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #ad1823;
+  transform-origin: left;
+  animation: project-photo-fill 5s linear both;
+}
+
+[dir="rtl"] .project-photo-progress {
+  transform-origin: right;
+}
+
+@keyframes project-photo-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
