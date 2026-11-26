@@ -1,3 +1,4 @@
+import {SiteLink} from '../components/SiteLink';
 import React, { useEffect, useState } from 'react';
 import {
   ArrowLeft,
@@ -64,7 +65,7 @@ const HERO_SLIDES = [
 ];
 
 export const HomePage: React.FC = () => {
-  const { t, lang, isRtl, navigate, setSelectedProject } = useApp();
+  const { t, lang, isRtl, navigate } = useApp();
   const [heroIdx, setHeroIdx] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
   const [activeRegionIdx, setActiveRegionIdx] = useState(5); // Highlight Saudi Arabia / NEOM or toggle any region
@@ -185,12 +186,7 @@ export const HomePage: React.FC = () => {
 
               {/* Caption Overlay & Direct Jump */}
               <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 sm:p-6">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const proj = PROJECTS.find((p) => p.id === HERO_SLIDES[heroIdx].projectId);
-                    if (proj) setSelectedProject(proj);
-                  }}
+                <SiteLink page="projects" detail={HERO_SLIDES[heroIdx].projectId}
                   className="text-start transition-opacity hover:opacity-90"
                 >
                   <p className="text-xs font-medium text-[#D11A22]">
@@ -199,7 +195,7 @@ export const HomePage: React.FC = () => {
                   <p className="mt-1 text-base font-bold text-white sm:text-lg">
                     {HERO_SLIDES[heroIdx].title[lang]}
                   </p>
-                </button>
+                </SiteLink>
 
                 <div className="flex shrink-0 items-center gap-2">
                   <button
@@ -514,8 +510,8 @@ export const HomePage: React.FC = () => {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35 }}
-                onClick={() => setSelectedProject(proj)}
-                className="group flex cursor-pointer flex-col overflow-hidden rounded-xl border border-[#E2E4E9] bg-white transition-shadow duration-200 hover:shadow-lg"
+
+                className="group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-[#E2E4E9] bg-white transition-shadow duration-200 hover:shadow-lg"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#191B1F]">
                   <img
@@ -551,7 +547,7 @@ export const HomePage: React.FC = () => {
                     </div>
 
                     <h3 className="font-display mt-2 text-lg font-bold text-[#191B1F] group-hover:text-[#D11A22] transition-colors">
-                      {proj.name[lang]}
+                      <SiteLink page="projects" detail={proj.id} className="after:absolute after:inset-0 focus-visible:after:outline">{proj.name[lang]}</SiteLink>
                     </h3>
 
                     {proj.highlightMetric && (

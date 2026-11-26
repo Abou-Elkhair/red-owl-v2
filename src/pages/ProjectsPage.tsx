@@ -8,7 +8,7 @@ import { Reveal } from '../components/MotionPrimitives';
 import { DisciplineKey, ProjectCountry, ProjectStatus } from '../types';
 
 export const ProjectsPage: React.FC = () => {
-  const { t, lang, setSelectedProject } = useApp();
+  const { t, lang, changeRoute } = useApp();
   const [discipline, setDiscipline] = useState<DisciplineKey | 'all'>('all');
   const [country, setCountry] = useState<ProjectCountry | 'all'>('all');
   const [status, setStatus] = useState<ProjectStatus | 'all'>('all');
@@ -159,8 +159,8 @@ export const ProjectsPage: React.FC = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.25 }}
-                  onClick={() => setSelectedProject(proj)}
-                  className="group flex cursor-pointer flex-col overflow-hidden rounded-xl border border-[#E2E4E9] bg-white transition-shadow duration-200 hover:shadow-lg"
+
+                  className="group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-[#E2E4E9] bg-white transition-shadow duration-200 hover:shadow-lg"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#191B1F]">
                     <img
@@ -196,7 +196,7 @@ export const ProjectsPage: React.FC = () => {
                       </div>
 
                       <h2 className="font-display mt-2 text-lg font-bold text-[#191B1F] transition-colors group-hover:text-[#D11A22]">
-                        <SiteLink page="projects" detail={proj.id} onClick={event=>event.stopPropagation()}>{proj.name[lang]}</SiteLink>
+                        <SiteLink page="projects" detail={proj.id} className="after:absolute after:inset-0 focus-visible:after:outline">{proj.name[lang]}</SiteLink>
                       </h2>
 
                       <p className="mt-2 flex items-start gap-1.5 text-xs leading-relaxed text-[#4B505B]">
@@ -260,7 +260,7 @@ export const ProjectsPage: React.FC = () => {
                 {PROJECTS.map((p, idx) => (
                   <tr
                     key={p.id}
-                    onClick={() => setSelectedProject(p)}
+                    onClick={() => changeRoute({lang,page:'projects',detail:p.id})}
                     className={`cursor-pointer transition-colors hover:bg-[#F4F5F7] ${
                       idx % 2 === 1 ? 'bg-[#FAFAFB]' : 'bg-white'
                     }`}
@@ -300,7 +300,7 @@ export const ProjectsPage: React.FC = () => {
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {OTHER_PROJECTS.map((item) => (
-              <div
+              <SiteLink page="projects" detail={item.id}
                 key={item.number}
                 className="flex items-start justify-between rounded-xl border border-[#E2E4E9] bg-[#F4F5F7] p-5"
               >
@@ -330,7 +330,7 @@ export const ProjectsPage: React.FC = () => {
                   </div>
                 </div>
                 <span className="text-xs font-bold text-[#D11A22] tabular-nums">{item.number}</span>
-              </div>
+              </SiteLink>
             ))}
           </div>
         </div>

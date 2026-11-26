@@ -6,7 +6,6 @@ import { AppProvider, useApp } from './context/AppContext';
 import { Navbar } from './components/Navbar';
 import { ProfileAssistant } from './assistant/ProfileAssistant';
 import { Footer } from './components/Footer';
-import { ProjectModal } from './components/ProjectModal';
 import { MediaLightbox } from './components/MediaLightbox';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
@@ -57,7 +56,6 @@ const PageRouter: React.FC = () => {
       </main>
       <Footer />
       <ProfileAssistant />
-      <ProjectModal />
       <MediaLightbox />
     </div>
   );

@@ -1,6 +1,6 @@
 import { specialties } from './specialties';
 import { CONTACT } from '../data/contact';
-import { PROJECTS } from '../data/projects';
+import { PROJECTS, OTHER_PROJECTS } from '../data/projects';
 import { TRANSLATIONS } from '../data/translations';
 import { routePath, type Route } from './routes';
 
@@ -10,6 +10,7 @@ if (!site.pathname.endsWith('/')) site.pathname += '/';
 export function metadata(route: Route) {
   const {lang,page,detail} = route, t = TRANSLATIONS[lang], ar = lang === 'ar';
   const project = page === 'projects' && PROJECTS.find(p => p.id === detail);
+  const other = page === 'projects' && OTHER_PROJECTS.find(p=>p.id===detail);
   const specialty = specialties.find(item => item.id === detail);
   const service = page === 'services' && (specialty ? {title:specialty.title[lang],shortDesc:specialty.shortDesc[lang]} : t.services.tabs.find(tab => tab.id === detail));
   const headings = {
@@ -21,10 +22,10 @@ export function metadata(route: Route) {
   };
   const descriptions = {home:t.hero.subtitle,about:t.about.glanceP1,services:t.services.pageDesc,
     projects:t.projectsPage.pageDesc,gallery:t.galleryPage.pageDesc,quality:t.qualityPage.pageDesc,contact:t.contactPage.pageDesc};
-  const name = project ? project.name[lang] : service ? service.title : headings[page];
+  const name = project ? project.name[lang] : other ? other.name[lang] : service ? service.title : headings[page];
   const title = name + ' | ' + (ar ? 'red-owl' : 'Red Owl Construction');
   const description = project ? [project.location[lang],project.scope[lang][0]].filter(Boolean).join(' — ')
-    : service ? service.shortDesc : descriptions[page];
+    : other ? [other.name[lang],other.sector[lang],other.subtitle?.[lang]].filter(Boolean).join(' — ') : service ? service.shortDesc : descriptions[page];
   const url = new URL(routePath(route),site).href;
   const alternate = (language: 'ar'|'en') => new URL(routePath({...route,lang:language}),site).href;
   const image = new URL(project ? project.coverImage : './assets/redowl/obj_7.jpg',site).href;

@@ -11,7 +11,7 @@ const copy = {
   en: {title:'Red Owl assistant',intro:'Which project or service would you like to explore?',dismiss:'Hide suggested questions',suggestions:'Suggested questions',close:'Close conversation',send:'Send question',input:'Ask a question…',prompts:['What was your role at NEOM?','What services do you offer?','How can I contact the team?']}
 };
 export function ProfileAssistant(){
-  const {lang,navigate,selectedProject,lightboxIndex,activeReel}=useApp();
+  const {lang,navigate,lightboxIndex,activeReel}=useApp();
   const labels=copy[lang];
   const [open,setOpen]=useState(false);
   const [dismissed,setDismissed]=useState(false);
@@ -27,7 +27,7 @@ export function ProfileAssistant(){
   const field=useRef<HTMLInputElement>(null);
   const launcher=useRef<HTMLButtonElement>(null);
   const conversation=useRef<HTMLDivElement>(null);
-  const hidden=!!selectedProject || lightboxIndex!==null || !!activeReel;
+  const hidden=lightboxIndex!==null || !!activeReel;
   const visible=open&&!hidden;
   useEffect(()=>{if(visible)field.current?.focus({preventScroll:true});},[visible]);
   useEffect(()=>{if(visible && conversation.current)conversation.current.scrollTop=conversation.current.scrollHeight;},[visible,turns,pending]);

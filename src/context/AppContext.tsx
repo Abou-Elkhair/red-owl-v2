@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { TRANSLATIONS, Translations } from '../data/translations';
-import { DisciplineKey, Language, PageId, Project, ReelItem } from '../types';
+import { DisciplineKey, Language, PageId, ReelItem } from '../types';
 
 import { browserRoute, routePath, type Route, pages } from '../seo/routes';
 import { updateHead } from '../seo/metadata';
@@ -15,8 +15,6 @@ interface AppContextValue {
   isRtl: boolean;
   currentPage: PageId;
   navigate: (page: PageId, options?: { prefillDisciplines?: DisciplineKey[] }) => void;
-  selectedProject: Project | null;
-  setSelectedProject: (project: Project | null) => void;
   lightboxIndex: number | null;
   setLightboxIndex: (idx: number | null) => void;
   activeReel: ReelItem | null;
@@ -30,7 +28,6 @@ const AppContext = createContext<AppContextValue | null>(null);
 export const AppProvider: React.FC<{ children: React.ReactNode; initialRoute?: Route }> = ({ children, initialRoute }) => {
   const [route,setRoute] = useState<Route>(() => initialRoute ?? browserRoute());
   const {lang,page:currentPage,detail} = route;
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [activeReel, setActiveReel] = useState<ReelItem | null>(null);
   const [prefilledDisciplines, setPrefilledDisciplines] = useState<DisciplineKey[]>(['fire']);
@@ -54,7 +51,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode; initialRoute?: R
         history.replaceState(null,'',new URL(routePath(next) || '.',document.baseURI));
       }
       setRoute(next);
-      setSelectedProject(null);
       setLightboxIndex(null);
       setActiveReel(null);
     }
@@ -94,8 +90,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode; initialRoute?: R
         isRtl,
         currentPage, detail, changeRoute,
         navigate,
-        selectedProject,
-        setSelectedProject,
         lightboxIndex,
         setLightboxIndex,
         activeReel,

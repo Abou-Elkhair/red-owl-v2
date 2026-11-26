@@ -45,6 +45,7 @@ export interface Project {
 }
 
 export interface OtherProject {
+  id: string;
   number: string;
   name: BilingualText;
   subtitle?: BilingualText;

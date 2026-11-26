@@ -652,24 +652,28 @@ export const PROJECTS: Project[] = [
 
 export const OTHER_PROJECTS: OtherProject[] = [
   {
+    id: 'eig-factory',
     number: '01',
     name: { ar: 'مصنع EIG', en: 'EIG Factory' },
     sector: { ar: 'صناعي', en: 'Industrial' },
     status: 'completed',
   },
   {
+    id: 'pepsi',
     number: '02',
     name: { ar: 'شركة بيبسي (Pepsi)', en: 'Pepsi' },
     sector: { ar: 'أغذية ومشروبات', en: 'FMCG & Beverage' },
     status: 'completed',
   },
   {
+    id: 'atos',
     number: '03',
     name: { ar: 'أتوس (Atos)', en: 'Atos' },
     sector: { ar: 'تكنولوجيا ومكاتب', en: 'Corporate Tech' },
     status: 'completed',
   },
   {
+    id: 'gastec-upper-egypt',
     number: '04',
     name: { ar: 'محطات غازتك', en: 'Gastec Stations' },
     subtitle: { ar: 'أكثر من 150 محطة في جميع أنحاء مصر', en: '150+ stations across Egypt' },
@@ -677,30 +681,35 @@ export const OTHER_PROJECTS: OtherProject[] = [
     status: 'in-progress',
   },
   {
+    id: 'cown-tower',
     number: '05',
     name: { ar: 'كراون تاور (Cown Tower)', en: 'Cown Tower' },
     sector: { ar: 'أبراج إدارية', en: 'Commercial Tower' },
     status: 'completed',
   },
   {
+    id: 'mercury-complex-tower',
     number: '06',
     name: { ar: 'ميركوري تاور', en: 'Mercury Tower' },
     sector: { ar: 'العاصمة الإدارية', en: 'New Capital Tower' },
     status: 'in-progress',
   },
   {
+    id: 'cayo-mall',
     number: '07',
     name: { ar: 'كايو مول (Cayo Mall)', en: 'Cayo Mall' },
     sector: { ar: 'تجاري', en: 'Commercial Mall' },
     status: 'in-progress',
   },
   {
+    id: 'eval-towers',
     number: '08',
     name: { ar: 'أبراج إيفال (Eval Towers)', en: 'Eval Towers' },
     sector: { ar: 'متعدد الاستخدامات', en: 'Mixed-Use Towers' },
     status: 'in-progress',
   },
   {
+    id: 'upove-community',
     number: '09',
     name: { ar: 'مجتمع أبوف السكني (Upove Community)', en: 'Upove Community' },
     sector: { ar: 'سكني', en: 'Residential' },

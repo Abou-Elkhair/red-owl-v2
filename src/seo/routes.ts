@@ -1,5 +1,5 @@
 import { specialties } from './specialties';
-import { PROJECTS } from '../data/projects';
+import { PROJECTS, OTHER_PROJECTS } from '../data/projects';
 import { TRANSLATIONS } from '../data/translations';
 import type { Language, PageId } from '../types';
 
@@ -9,7 +9,7 @@ export const routes: Route[] = (['ar','en'] as const).flatMap(lang => [
   ...pages.map(page => ({lang, page})),
   ...TRANSLATIONS[lang].services.tabs.map(tab => ({lang, page: 'services' as const, detail: tab.id})),
   ...specialties.map(item => ({lang, page: 'services' as const, detail: item.id})),
-  ...PROJECTS.map(project => ({lang, page: 'projects' as const, detail: project.id})),
+  ...[...new Set([...PROJECTS,...OTHER_PROJECTS].map(p=>p.id))].map(id => ({lang, page: 'projects' as const, detail: id})),
 ]);
 
 export function routePath({lang, page, detail}: Route) {
