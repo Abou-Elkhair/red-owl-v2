@@ -83,9 +83,9 @@ export const HomePage: React.FC = () => {
         <MepSchematicBackdrop />
 
         <div className="relative mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
-          <div className="grid grid-cols-1 items-stretch gap-x-10 gap-y-5 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10">
+          <div className="grid items-center gap-5 lg:grid-cols-2 lg:gap-12">
             {/* Hero Copy Column */}
-            <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1">
+            <div className="min-w-0">
                 <p className="text-xs font-bold tracking-wider text-[#D11A22] sm:text-sm">
                   {t.hero.kicker}
                 </p>
@@ -119,61 +119,61 @@ export const HomePage: React.FC = () => {
               </div>
 
 
-            {/* Hero Animated Image Carousel Column (stretched equal height) */}
-            <div
-              className="relative min-h-[340px] overflow-hidden rounded-xl border border-[#2E323B] bg-[#121417] lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:min-h-[480px]"
-              onPointerEnter={event => { if (event.pointerType === 'mouse') setHeroPaused(true); }}
-              onPointerLeave={() => setHeroPaused(false)}
-            >
-              {HERO_SLIDES.map((slide, index) => (
-                <img
-                  key={slide.projectId}
-                  src={slide.image}
-                  alt={index === heroIdx ? slide.title[lang] : ''}
-                  fetchPriority={index === 0 ? 'high' : 'auto'}
-                  referrerPolicy="no-referrer"
-                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${index === heroIdx ? 'opacity-100' : 'opacity-0'}`}
-                />
-              ))}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+            <div className="grid min-w-0 gap-3">
+              <div
+                className="relative min-h-[340px] overflow-hidden rounded-xl border border-[#2E323B] bg-[#121417] lg:min-h-[clamp(340px,30vw,440px)]"
+                onPointerEnter={event => { if (event.pointerType === 'mouse') setHeroPaused(true); }}
+                onPointerLeave={() => setHeroPaused(false)}
+              >
+                {HERO_SLIDES.map((slide, index) => (
+                  <img
+                    key={slide.projectId}
+                    src={slide.image}
+                    alt={index === heroIdx ? slide.title[lang] : ''}
+                    fetchPriority={index === 0 ? 'high' : 'auto'}
+                    referrerPolicy="no-referrer"
+                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${index === heroIdx ? 'opacity-100' : 'opacity-0'}`}
+                  />
+                ))}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
-              {/* Caption Overlay & Direct Jump */}
-              <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 sm:p-6">
-                <SiteLink page="projects" detail={HERO_SLIDES[heroIdx].projectId}
-                  className="text-start transition-opacity hover:opacity-90"
-                >
-                  <p className="text-xs font-medium text-[#D11A22]">
-                    {HERO_SLIDES[heroIdx].meta[lang]}
-                  </p>
-                  <p className="mt-1 text-base font-bold text-white sm:text-lg">
-                    {HERO_SLIDES[heroIdx].title[lang]}
-                  </p>
-                </SiteLink>
+                {/* Caption Overlay & Direct Jump */}
+                <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 sm:p-6">
+                  <SiteLink page="projects" detail={HERO_SLIDES[heroIdx].projectId}
+                    className="text-start transition-opacity hover:opacity-90"
+                  >
+                    <p className="text-xs font-medium text-[#D11A22]">
+                      {HERO_SLIDES[heroIdx].meta[lang]}
+                    </p>
+                    <p className="mt-1 text-base font-bold text-white sm:text-lg">
+                      {HERO_SLIDES[heroIdx].title[lang]}
+                    </p>
+                  </SiteLink>
 
-                <div className="flex shrink-0 items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setHeroIdx((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
-                    }
-                    className="flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/55 text-white transition-colors hover:border-[#D11A22] hover:bg-[#D11A22]"
-                    aria-label="Previous slide"
-                  >
-                    {isRtl ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setHeroIdx((prev) => (prev + 1) % HERO_SLIDES.length)}
-                    className="flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/55 text-white transition-colors hover:border-[#D11A22] hover:bg-[#D11A22]"
-                    aria-label="Next slide"
-                  >
-                    {isRtl ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                  </button>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setHeroIdx((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
+                      }
+                      className="flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/55 text-white transition-colors hover:border-[#D11A22] hover:bg-[#D11A22]"
+                      aria-label="Previous slide"
+                    >
+                      {isRtl ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setHeroIdx((prev) => (prev + 1) % HERO_SLIDES.length)}
+                      className="flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/55 text-white transition-colors hover:border-[#D11A22] hover:bg-[#D11A22]"
+                      aria-label="Next slide"
+                    >
+                      {isRtl ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
               {/* Hero Slide Selector Controls */}
-              <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:self-end lg:border-t lg:border-[#2E323B] lg:pt-5">
+              <div>
                 <div className="flex items-center justify-between text-xs text-[#8C93A0]">
                   <span>{t.hero.slideLabel}</span>
                   <span className="tabular-nums font-semibold text-white">
@@ -202,6 +202,7 @@ export const HomePage: React.FC = () => {
                   ))}
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </section>
