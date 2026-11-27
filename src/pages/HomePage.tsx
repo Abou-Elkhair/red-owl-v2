@@ -1,18 +1,17 @@
+import { CoverageExplorer } from '../components/CoverageExplorer';
 import {SiteLink} from '../components/SiteLink';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
-  Building2,
   ChevronLeft,
   ChevronRight,
   Flame,
-  MapPin,
   ShieldCheck,
   Wrench,
   Zap,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useApp } from '../context/AppContext';
 import { PROJECTS } from '../data/projects';
 import {
@@ -68,16 +67,7 @@ export const HomePage: React.FC = () => {
   const { t, lang, isRtl, navigate } = useApp();
   const [heroIdx, setHeroIdx] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
-  const [activeRegionIdx, setActiveRegionIdx] = useState(5); // Highlight Saudi Arabia / NEOM or toggle any region
   const [carouselOffset, setCarouselOffset] = useState(0);
-
-  useEffect(() => {
-    if (heroPaused) return;
-    const id = window.setInterval(() => {
-      setHeroIdx((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 4800);
-    return () => window.clearInterval(id);
-  }, [heroPaused]);
 
   const featuredProjects = PROJECTS.slice(0, 8);
   const visibleCount = 3;
@@ -93,10 +83,9 @@ export const HomePage: React.FC = () => {
         <MepSchematicBackdrop />
 
         <div className="relative mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
-          <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="grid grid-cols-1 items-stretch gap-x-10 gap-y-5 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10">
             {/* Hero Copy Column */}
-            <div className="flex flex-col justify-between lg:col-span-6">
-              <div>
+            <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1">
                 <p className="text-xs font-bold tracking-wider text-[#D11A22] sm:text-sm">
                   {t.hero.kicker}
                 </p>
@@ -129,60 +118,24 @@ export const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Hero Slide Selector Controls */}
-              <div className="mt-10 border-t border-[#2E323B] pt-5">
-                <div className="flex items-center justify-between text-xs text-[#8C93A0]">
-                  <span>{t.hero.slideLabel}</span>
-                  <span className="tabular-nums font-semibold text-white">
-                    0{heroIdx + 1} / 0{HERO_SLIDES.length}
-                  </span>
-                </div>
-                <div className="mt-3 grid grid-cols-5 gap-2">
-                  {HERO_SLIDES.map((s, idx) => (
-                    <button
-                      key={s.projectId}
-                      type="button"
-                      onClick={() => setHeroIdx(idx)}
-                      className="group flex flex-col gap-1.5 text-start focus-visible:outline-2 focus-visible:outline-[#D11A22]"
-                      aria-label={s.title[lang]}
-                    >
-                      <div className="h-1 w-full overflow-hidden rounded-full bg-[#2E323B]">
-                        <div
-                          className={`h-full transition-all duration-300 ${
-                            idx === heroIdx ? 'w-full bg-[#D11A22]' : 'w-0 bg-[#6E7482] group-hover:w-1/2'
-                          }`}
-                        />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
 
             {/* Hero Animated Image Carousel Column (stretched equal height) */}
             <div
-              className="relative min-h-[340px] overflow-hidden rounded-xl border border-[#2E323B] bg-[#121417] lg:col-span-6 lg:min-h-[480px]"
-              onMouseEnter={() => setHeroPaused(true)}
-              onMouseLeave={() => setHeroPaused(false)}
+              className="relative min-h-[340px] overflow-hidden rounded-xl border border-[#2E323B] bg-[#121417] lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:min-h-[480px]"
+              onPointerEnter={event => { if (event.pointerType === 'mouse') setHeroPaused(true); }}
+              onPointerLeave={() => setHeroPaused(false)}
             >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={heroIdx}
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0"
-                >
-                  <img
-                    src={HERO_SLIDES[heroIdx].image}
-                    alt={HERO_SLIDES[heroIdx].title[lang]}
-                    referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                </motion.div>
-              </AnimatePresence>
+              {HERO_SLIDES.map((slide, index) => (
+                <img
+                  key={slide.projectId}
+                  src={slide.image}
+                  alt={index === heroIdx ? slide.title[lang] : ''}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  referrerPolicy="no-referrer"
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${index === heroIdx ? 'opacity-100' : 'opacity-0'}`}
+                />
+              ))}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
               {/* Caption Overlay & Direct Jump */}
               <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 sm:p-6">
@@ -219,6 +172,36 @@ export const HomePage: React.FC = () => {
                 </div>
               </div>
             </div>
+              {/* Hero Slide Selector Controls */}
+              <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:self-end lg:border-t lg:border-[#2E323B] lg:pt-5">
+                <div className="flex items-center justify-between text-xs text-[#8C93A0]">
+                  <span>{t.hero.slideLabel}</span>
+                  <span className="tabular-nums font-semibold text-white">
+                    0{heroIdx + 1} / 0{HERO_SLIDES.length}
+                  </span>
+                </div>
+                <div className="mt-3 grid grid-cols-5 gap-2">
+                  {HERO_SLIDES.map((s, idx) => (
+                    <button
+                      key={s.projectId}
+                      type="button"
+                      onClick={() => setHeroIdx(idx)}
+                      className="group flex flex-col gap-1.5 text-start focus-visible:outline-2 focus-visible:outline-[#D11A22]"
+                      aria-label={s.title[lang]}
+                      aria-pressed={idx === heroIdx}
+                    >
+                      <div className="h-1 w-full overflow-hidden rounded-full bg-[#2E323B]">
+                        {idx === heroIdx && (
+                          <div className="hero-slide-progress h-full w-full bg-[#D11A22]"
+                            style={{ animationPlayState: heroPaused ? 'paused' : 'running' }}
+                            onAnimationEnd={() => setHeroIdx((idx + 1) % HERO_SLIDES.length)}
+                          />
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
           </div>
         </div>
       </section>
@@ -586,73 +569,7 @@ export const HomePage: React.FC = () => {
             </div>
           </Reveal>
 
-          <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12">
-            {/* Region Selector Buttons (compact horizontal scroll on mobile/small, vertical list on lg+) */}
-            <div className="no-scrollbar flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 lg:col-span-5 lg:grid lg:grid-cols-1 lg:gap-2.5 lg:overflow-visible lg:pb-0">
-              {t.about.regions.map((region, idx) => {
-                const active = activeRegionIdx === idx;
-                return (
-                  <button
-                    key={region.name}
-                    type="button"
-                    onClick={() => setActiveRegionIdx(idx)}
-                    className={`flex min-h-[44px] shrink-0 snap-start items-center justify-between gap-2.5 whitespace-nowrap rounded-lg border px-3 py-2 text-start transition-colors duration-150 lg:w-full lg:px-4 lg:py-3.5 ${
-                      active
-                        ? 'border-[#D11A22] bg-[#D11A22] text-white'
-                        : 'border-[#2E323B] bg-[#25282E]/90 text-[#C5C9D3] hover:border-[#4B505B] hover:text-white'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 lg:gap-3">
-                      <MapPin className={`h-3.5 w-3.5 shrink-0 lg:h-4 lg:w-4 ${active ? 'text-white' : 'text-[#D11A22]'}`} />
-                      <span className="text-xs font-semibold lg:text-sm">{region.name}</span>
-                    </div>
-                    <span className="tabular-nums text-[11px] opacity-75 lg:text-xs">0{idx + 1}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Active Region Spotlight Panel */}
-            <div className="flex flex-col justify-between rounded-xl border border-[#2E323B] bg-[#25282E] p-6 sm:p-8 lg:col-span-7">
-              <div>
-                <div className="flex items-center gap-2 text-xs font-bold text-[#D11A22] tabular-nums">
-                  <span>0{activeRegionIdx + 1}</span>
-                  <span aria-hidden="true">·</span>
-                  <span>{lang === 'ar' ? 'نطاق التنفيذ الميداني' : 'Active Field Footprint'}</span>
-                </div>
-                <h3 className="font-display mt-3 text-2xl font-bold text-white">
-                  {t.about.regions[activeRegionIdx].name}
-                </h3>
-                <ul className="mt-6 space-y-3.5">
-                  {t.about.regions[activeRegionIdx].items.map((line, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-3 rounded-lg border border-[#343842] bg-[#191B1F]/70 p-4 text-sm leading-relaxed text-[#E2E4E9]"
-                    >
-                      <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-[#D11A22]" />
-                      <span>{line}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#343842] pt-5">
-                <span className="text-xs text-[#8C93A0]">
-                  {lang === 'ar'
-                    ? 'جاهزية لانتقال الفرق الهندسية في كافة محافظات مصر والمملكة العربية السعودية'
-                    : 'Mobilized MEP field teams across Egypt & Saudi Arabia'}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => navigate('projects')}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-[#D11A22]"
-                >
-                  <span>{t.home.viewAllProjects}</span>
-                  <ForwardArrow className="h-3.5 w-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
+          <CoverageExplorer />
         </div>
       </section>
 

@@ -112,3 +112,17 @@ html[dir="rtl"] .font-display {
     animation: none;
   }
 }
+
+.hero-slide-progress {
+  transform-origin: left;
+  animation: hero-slide-fill 4.8s linear both;
+}
+
+[dir="rtl"] .hero-slide-progress {
+  transform-origin: right;
+}
+
+@keyframes hero-slide-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
